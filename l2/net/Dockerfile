@@ -1,9 +1,7 @@
-#FROM nexus.mir:59999/tools/core-dotnet/aspnet:6.0.10-focal AS base
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-jammy AS base
 WORKDIR /app
 #EXPOSE 5000
 
-#FROM nexus.mir:59999/tools/core-dotnet/sdk:6.0.16-jammy-custom AS build
 FROM mcr.microsoft.com/dotnet/sdk:6.0-jammy AS build
 WORKDIR /src
 COPY . /src
