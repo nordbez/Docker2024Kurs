@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  weather-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile.new  
+    image: weather-app:2.0
+    container_name: weather
+    ports: 
+      - "5000:80"
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+          cpus: "1"
