@@ -1,11 +1,13 @@
-FROM nexus.mir:59999/tools/core-dotnet/sdk:6.0.16-jammy-custom AS build
+#FROM nexus.mir:59999/tools/core-dotnet/sdk:6.0.16-jammy-custom AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-jammy AS build
 WORKDIR /src
 COPY . /src
 RUN dotnet restore ./WebApplication_DIT_Docker/WebApplication_DIT_Docker.csproj \
 	&& dotnet build ./WebApplication_DIT_Docker/WebApplication_DIT_Docker.csproj --no-restore --configuration Release \
 	&& dotnet publish ./WebApplication_DIT_Docker/WebApplication_DIT_Docker.csproj --no-build --configuration Release -o /src/publish
 
-FROM nexus.mir:59999/tools/core-dotnet/aspnet:6.0.10-focal AS base
+#FROM nexus.mir:59999/tools/core-dotnet/aspnet:6.0.10-focal AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-jammy AS base
 WORKDIR /app
 COPY --from=build /src/publish /app
 EXPOSE 80
