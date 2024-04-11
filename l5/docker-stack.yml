@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  nginx-net:
+    image: nginx-net:1.0
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        order: start-first
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3  
+    ports:
+      - 5000:80
+    environment:
+      TZ: "Europe/Moscow"
+    depends_on:
+      - net
+    configs:
+      - source: nginx-cust.conf
+        target: /etc/nginx/conf.d/nginx-cust.conf
+
+  net:
+    image: net:1.0
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        order: start-first
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+    environment:    
+      TZ: "Europe/Moscow"
+    
+configs:
+  nginx-cust.conf:
+    file: nginx-cust.conf
